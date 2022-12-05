@@ -3,7 +3,7 @@ import { createPost, deletePost, getAllPost, getPostById, updatePost} from '../c
 
 const router = express.Router();
 
-router.post('/posting', createPost)
+router.post('/postings', createPost)
 router.get('/posting', getAllPost)
 router.get('/posting/:id', getPostById)
 router.put('/posting/:id', updatePost)
