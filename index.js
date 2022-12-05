@@ -13,6 +13,7 @@ const __dirname = dirname(__filename);
 
 const app = express();
 const port = process.env.PORT || 3001;
+app.use(cors())
 
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -36,18 +37,16 @@ const fileStorage = multer.diskStorage({
   };
   
     app.use(bodyParser.json());
-    app.use(multer({storage : fileStorage, fileFilter : fileFilter}).single('image'));
     app.use('/images', express.static(path.join(__dirname,  'images')));
-    
-    app.use(cors())
+    app.use(multer({storage : fileStorage, fileFilter : fileFilter}).single('image'));
 
-  app.use((req, res, next) => {
-      res.setHeader('Access-Control-Allow-Origin', '*');
-      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS, PUT');
-      res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-      res.setHeader("Access-Control-Allow-Credentials", "true");
-      next();
-  });
+    app.use((req, res, next) => {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS, PUT');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+        res.setHeader("Acbcess-Control-Allow-Credentials", "true");
+        next();
+    });
 
   app.use('/', FbPosting);
 
