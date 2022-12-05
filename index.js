@@ -25,40 +25,38 @@ const fileStorage = multer.diskStorage({
   
   const fileFilter = (req, file, cb) => {
     if (
-      file.mimetype === "images/png" ||
-      file.mimetype === "images/jpg" ||
-      file.mimetype === "images/jpeg"
+      file.mimetype === "image/png" ||
+      file.mimetype === "image/jpg" ||
+      file.mimetype === "image/jpeg"
     ) {
       cb(null, true);
     } else {
       cb(null, false);
     }
   };
-
-    app.use('/images', express.static(path.join(__dirname,  'images')));
     app.use(multer({storage : fileStorage, fileFilter : fileFilter}).single('image'));
+    app.use('/images', express.static(path.join(__dirname,  'images')));
+    
+    app.use(cors())
 
+  app.use((req, res, next) => {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS, PUT');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+      res.setHeader("Access-Control-Allow-Credentials", "true");
+      next();
+  });
 
-app.use(cors())
+  app.use(bodyParser.json());
 
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS, PUT');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    res.setHeader("Access-Control-Allow-Credentials", "true");
-    next();
-});
+  app.use('/', FbPosting);
 
-app.use(bodyParser.json());
-
-app.use('/', FbPosting);
-
-app.use((error, req, res, next) => {
-    const status = error.errorStatus || 500;
-    const message = error.message;
-    const data = error.data;
-    res.status(status).json({ message: message, data: data });
-});
+  app.use((error, req, res, next) => {
+      const status = error.errorStatus || 500;
+      const message = error.message;
+      const data = error.data;
+      res.status(status).json({ message: message, data: data });
+  });
 
 mongoose.connect('mongodb+srv://muzani:muzani12345678@uploudedchalangge1.ldow6vq.mongodb.net/?retryWrites=true&w=majority')
 .then(() => {
