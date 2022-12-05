@@ -50,17 +50,10 @@ const fileStorage = multer.diskStorage({
 
   app.use('/', FbPosting);
 
-  app.use((error, req, res, next) => {
-      const status = error.errorStatus || 500;
-      const message = error.message;
-      const data = error.data;
-      res.status(status).json({ message: message, data: data });
+  mongoose.connect('mongodb+srv://muzani:muzani12345678@uploudedchalangge1.ldow6vq.mongodb.net/?retryWrites=true&w=majority')
+  .then(() => {
+      app.listen(port, () => console.log('Berhsil Konek'));
+  })
+  .catch(err => {
+      console.log(err);
   });
-
-mongoose.connect('mongodb+srv://muzani:muzani12345678@uploudedchalangge1.ldow6vq.mongodb.net/?retryWrites=true&w=majority')
-.then(() => {
-    app.listen(port, () => console.log('Berhsil Konek'));
-})
-.catch(err => {
-    console.log(err);
-});

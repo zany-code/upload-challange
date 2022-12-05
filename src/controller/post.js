@@ -10,21 +10,6 @@ const __dirname = dirname(__filename);
 
 export const createPost = (req, res, next) => {
 
-    const error = validationResult(req);
-
-    if (!error.isEmpty()) {
-        const err = new Error('Invalid Value');
-        err.errorStatus = 400;
-        err.data = error.array();
-        throw err
-    };
-
-    if(!req.file) {
-        const err = new Error('Image Harus Di Uploaded');
-        err.errorStatus = 422;
-        throw err
-    }
-
     const creator = req.body.creator;
     const body = req.body.body;
     const image = req.file.path;
@@ -61,20 +46,6 @@ export const getPostById = (req, res, next) => {
 
 export const updatePost = (req, res, next) => {
     
-    const error = validationResult(req);
-
-    if (!error.isEmpty()) {
-        const err = new Error('Invalid Value');
-        err.errorStatus = 400;
-        err.data = error.array();
-        throw err
-    }
-
-    if(!req.file) {
-        const err = new Error('Image Harus Di Uploaded');
-        err.errorStatus = 422;
-        throw err
-    }
     const id = req.params.id;
     const creator = req.body.creator;
     const body = req.body.body;
