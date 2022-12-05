@@ -34,6 +34,8 @@ const fileStorage = multer.diskStorage({
       cb(null, false);
     }
   };
+  
+    app.use(bodyParser.json());
     app.use(multer({storage : fileStorage, fileFilter : fileFilter}).single('image'));
     app.use('/images', express.static(path.join(__dirname,  'images')));
     
@@ -46,8 +48,6 @@ const fileStorage = multer.diskStorage({
       res.setHeader("Access-Control-Allow-Credentials", "true");
       next();
   });
-
-  app.use(bodyParser.json());
 
   app.use('/', FbPosting);
 
