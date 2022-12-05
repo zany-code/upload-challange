@@ -1,4 +1,3 @@
-import { validationResult } from "express-validator";
 import path from 'path';
 import fs from 'fs'
 import { fileURLToPath } from 'url';
@@ -45,7 +44,7 @@ export const getPostById = (req, res, next) => {
 }
 
 export const updatePost = (req, res, next) => {
-    
+
     const id = req.params.id;
     const creator = req.body.creator;
     const body = req.body.body;
